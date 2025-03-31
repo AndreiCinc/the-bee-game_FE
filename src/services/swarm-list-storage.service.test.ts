@@ -1,3 +1,4 @@
+import { SWARM_LIST } from "../shared/model";
 import { SwarmListStorageService } from "./swarm-list-storage.service";
 
 describe("SwarmListStorageService", () => {
@@ -32,39 +33,35 @@ describe("SwarmListStorageService", () => {
   });
 
   it("should set swarm value in storage", () => {
-    const key = "testSwarm";
     const value = { a: 1 };
 
-    service.setSwarm(key, value);
+    service.setSwarm(value);
 
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      key,
+    expect(localStorageMock.setItem).toHaveBeenLastCalledWith(
+      SWARM_LIST,
       JSON.stringify(value),
     );
   });
 
   it("should get swarm value from storage", () => {
-    const key = "testSwarm";
     const value = { b: 2 };
     localStorageMock.getItem = jest.fn((key: string) => JSON.stringify(value));
 
-    const result = service.getSwarm(key);
+    const result = service.getSwarm();
 
-    expect(localStorageMock.getItem).toHaveBeenCalledWith(key);
+    expect(localStorageMock.getItem).toHaveBeenLastCalledWith(SWARM_LIST);
     expect(result).toEqual(value);
   });
 
   it("should return null if value does not exist", () => {
-    const key = "missingSwarm";
     localStorageMock.getItem = jest.fn((key: string) => null);
 
-    const result = service.getSwarm(key);
+    const result = service.getSwarm();
 
     expect(result).toBeNull();
   });
 
   it("should update swarm by merging existing value", () => {
-    const key = "mergeSwarm";
     const existing = { a: 1, b: 2 };
     const update = { b: 3, c: 4 };
     const expected = { a: 1, b: 3, c: 4 };
@@ -73,33 +70,30 @@ describe("SwarmListStorageService", () => {
       JSON.stringify(existing),
     );
 
-    service.updateSwarm(key, update);
+    service.updateSwarm(update);
 
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      key,
+    expect(localStorageMock.setItem).toHaveBeenLastCalledWith(
+      SWARM_LIST,
       JSON.stringify(expected),
     );
   });
 
   it("should set swarm if key does not exist during update", () => {
-    const key = "newSwarm";
     const value = { x: 123 };
 
     localStorageMock.getItem = jest.fn((key: string) => null);
 
-    service.updateSwarm(key, value);
+    service.updateSwarm(value);
 
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      key,
+    expect(localStorageMock.setItem).toHaveBeenLastCalledWith(
+      SWARM_LIST,
       JSON.stringify(value),
     );
   });
 
   it("should remove swarm from storage", () => {
-    const key = "removeSwarm";
+    service.removeSwarm();
 
-    service.removeSwarm(key);
-
-    expect(localStorageMock.removeItem).toHaveBeenCalledWith(key);
+    expect(localStorageMock.removeItem).toHaveBeenLastCalledWith(SWARM_LIST);
   });
 });

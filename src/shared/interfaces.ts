@@ -6,3 +6,7 @@ export interface BeeInterface {
 export interface UserInterface {
   userName: string;
 }
+
+export type SwarmMembersType = {
+  [key: string]: number;
+};

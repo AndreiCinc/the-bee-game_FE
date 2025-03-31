@@ -1,10 +1,11 @@
 import { swarmMembersNumber } from "./shared/model";
 import { SwarmListStorageService } from "./services/swarm-list-storage.service";
-import { createSwarm } from "./utils/swarm-utils";
+import { getRandomSwarmIndex } from "./utils/swarm-utils";
+import { SwarmService } from "./services/swarm.service";
 
-const swarmList = createSwarm(swarmMembersNumber);
-const swarmListStorage = new SwarmListStorageService();
-swarmListStorage.setSwarm("swarmList", swarmList);
-console.log("Swarm List:", swarmListStorage.getSwarm("swarmList"));
-swarmListStorage.setSwarm("userDetails", { name: "John Doe" });
-console.log("User Details:", swarmListStorage.getSwarm("userDetails"));
+const swarmService = new SwarmService(new SwarmListStorageService());
+const swarmMembers = swarmService.initializeSwarm(swarmMembersNumber);
+console.log(swarmMembers);
+const randomSwarmIndex = getRandomSwarmIndex(swarmMembers.length);
+const updatedBee = swarmService.handleHitBee(swarmMembers, randomSwarmIndex);
+console.log(updatedBee);

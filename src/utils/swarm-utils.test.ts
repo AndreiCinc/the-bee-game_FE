@@ -1,6 +1,6 @@
 import { BeeEnum } from "../shared/enums";
 import { membersHp } from "../shared/model";
-import { createSwarmRecursive } from "./swarm-utils";
+import { createSwarm } from "./swarm-utils";
 
 describe("createSwarmRecursive", () => {
   it("should generate correct swarm based on input object", () => {
@@ -10,7 +10,7 @@ describe("createSwarmRecursive", () => {
       [BeeEnum.Drone]: 3,
     };
 
-    const result = createSwarmRecursive(input);
+    const result = createSwarm(input);
 
     expect(result).toHaveLength(6);
     const queens = result.filter(
@@ -39,7 +39,7 @@ describe("createSwarmRecursive", () => {
   });
 
   it("should return empty array if input is empty", () => {
-    const result = createSwarmRecursive({});
+    const result = createSwarm({});
     expect(result).toEqual([]);
   });
 });
