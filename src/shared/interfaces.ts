@@ -4,9 +4,11 @@ export interface BeeInterface {
 }
 
 export interface UserInterface {
-  userName: string;
+  name: string;
 }
 
 export type SwarmMembersType = {
   [key: string]: number;
 };
+
+export type BeeType = "Worker" | "Drone" | "Queen";

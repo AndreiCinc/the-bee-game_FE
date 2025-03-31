@@ -15,7 +15,7 @@ export class SwarmListStorageService {
   updateSwarm(value: any) {
     const existingValue = this.storage.getItem(SWARM_LIST);
     if (existingValue) {
-      const updatedValue = { ...JSON.parse(existingValue), ...value };
+      const updatedValue = [...value];
       this.storage.setItem(SWARM_LIST, JSON.stringify(updatedValue));
     } else {
       this.storage.setItem(SWARM_LIST, JSON.stringify(value));

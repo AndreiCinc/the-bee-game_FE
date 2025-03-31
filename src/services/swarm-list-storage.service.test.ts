@@ -63,8 +63,7 @@ describe("SwarmListStorageService", () => {
 
   it("should update swarm by merging existing value", () => {
     const existing = { a: 1, b: 2 };
-    const update = { b: 3, c: 4 };
-    const expected = { a: 1, b: 3, c: 4 };
+    const update = [{ b: 3, c: 4 }];
 
     localStorageMock.getItem = jest.fn((key: string) =>
       JSON.stringify(existing),
@@ -74,7 +73,7 @@ describe("SwarmListStorageService", () => {
 
     expect(localStorageMock.setItem).toHaveBeenLastCalledWith(
       SWARM_LIST,
-      JSON.stringify(expected),
+      JSON.stringify(update),
     );
   });
 

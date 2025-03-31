@@ -33,7 +33,7 @@ describe("UserService", () => {
   });
 
   it("should save user in localStorage", () => {
-    const mockUser: UserInterface = { userName: "Andrei" };
+    const mockUser: UserInterface = { name: "Andrei" };
 
     service.setUserName(mockUser);
 
@@ -44,7 +44,7 @@ describe("UserService", () => {
   });
 
   it("should get user from localStorage", () => {
-    const mockUser: UserInterface = { userName: "Daniel" };
+    const mockUser: UserInterface = { name: "Daniel" };
     localStorage.getItem = jest.fn(() => JSON.stringify(mockUser));
 
     const result = service.getUserName();

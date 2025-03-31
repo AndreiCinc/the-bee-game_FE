@@ -1,4 +1,5 @@
 import { BeeEnum } from "../shared/enums";
+import { BeeType } from "../shared/interfaces";
 import { membersHp, swarmMembersDamage } from "../shared/model";
 
 export function createSwarm(swarmMembers: any): any {
@@ -19,4 +20,13 @@ export function hitBee(bee: any): any {
     ...bee,
     healthPoints: bee.healthPoints - swarmMembersDamage[bee.type as BeeEnum],
   };
+}
+
+export function groupSwarm(swarm: any): Record<string, any[]> {
+  return swarm.reduce((acc: Record<string, any[]>, bee: any) => {
+    const key = bee.type as BeeType;
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(bee);
+    return acc;
+  }, {});
 }
